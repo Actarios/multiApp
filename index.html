@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тестовая страничка</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <section id="main">
+        <div class="todo_wrapper">
+            <h2>Список задач</h2>
+            <div class="todo_filter_wrap">
+                <!-- Фильтр и поиск -->
+                <input type="text" class="todo_filter" id="todoFilter" placeholder="Поиск...">
+            </div>
+            <ul class="todo_list green-light">
+                <li class="todo_item">
+                    <div class="todo_item_num">1</div>
+                    <input class="todo_item_value" type="text" value="Покормить кота" disabled>
+                </li>
+                <li class="todo_item">
+                    <div class="todo_item_num">2</div>
+                    <input class="todo_item_value" type="text" value="Проверить почту" disabled>
+                </li>
+                <li class="todo_item">
+                    <div class="todo_item_num">3</div>
+                    <input class="todo_item_value" type="text" value="Погладить кота" disabled>
+                </li>
+            </ul>
+            <div class="todo_panel">
+                <input type="button" value="Добавить" id="addTodo">
+                <input type="button" value="Редактировать" id="changeTodo">
+                <input type="button" value="Сохранить" id="saveChangesTodo" class="hide">
+                <input type="button" value="Удалить" id="deleteTodo">
+                <input type="button" value="Подтвердить удаление" id="confirmDeleteTodo" class="hide">
+                <input type="button" value="Удалить все" id="deleteAllTodo">
+            </div>
+        </div>
+    </section>
+
+    <script src="js/index.js"></script>
+</body>
+</html>
