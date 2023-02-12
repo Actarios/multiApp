@@ -13,6 +13,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Filter
 
+    todoList.addEventListener('click', (event) => {
+        let todoItems = document.querySelectorAll('.todo_item'),
+            currentParent = event.target.parentElement
+
+        
+        if (event.target.matches('.todo_item_value')) {
+            
+            if (currentParent.matches('.active')) {
+                currentParent.classList.remove('active')
+            } else {
+                for (let elem of todoItems) {
+                    elem.classList.remove('active')
+                }
+                currentParent.classList.add('active')
+            }
+        }
+    })
+
     let todoFilter = document.querySelector('#todoFilter')
 
     todoFilter.addEventListener('input', function() {
@@ -29,33 +47,48 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     })
 
+    // Show full description
+
+    
+
     // Adding new task
 
-    class Task {
-        constructor(title, desc, deadline) {
-            this.title = title
-            this.desc = desc
-            this.deadline = deadline
-            this.pending = false
-        }
-    }
+    const addTodoBtn = document.getElementById('addTodoBtn')
 
-    let newTask = new Task('Погладить кота', 'Я люблю своего котика, причешу хвостик гладко', '2023-02-13')
+    // class Task {
+    //     constructor(title, desc, deadline) {
+    //         this.title = title
+    //         this.desc = desc
+    //         this.deadline = deadline
+    //         this.pending = false
+    //     }
+    // }
 
-    console.log(newTask)
+    // let workingTasks = new Map()
+    // let completedTasks = new Map()
 
-    let addTodo = document.querySelector('#addTodo')
+    // addTodoBtn.addEventListener('click', () => {
+    //     let ans1 = prompt('Название задачи:', ''),
+    //         ans2 = prompt('Краткое описание:', ''),
+    //         ans3 = prompt('Крайний срок выполнения? (в формате YYYY-MM-DD)', '')
+        
+    //     let task = new Task(ans1, ans2, ans3)
+    //     workingTasks.set(task.title, task)
 
-    addTodo.addEventListener('click', function() {
+    //     console.log(workingTasks)
+    // })
+
+    // let newTask = new Task('Погладить кота', 'Я люблю своего котика, причешу хвостик гладко', '2023-02-13')
+
+
+    
+    addTodoBtn.addEventListener('click', function() {
         let ans = prompt('Напишите текст задачи:', '')
 
         if (ans !== '' && ans !== null) {
             createListPoint(ans)
         } else {
             let exit = confirm('Вы уверены, что хотите выйти?', '')
-            if (!exit) {
-                let ans2 = prompt('Напишите текст задачи:', ans)
-            }
         }
     })
 
@@ -82,8 +115,6 @@ document.addEventListener('DOMContentLoaded', function() {
     let saveChangesTodo = document.querySelector('#saveChangesTodo')
 
     changeTodo.addEventListener('click', function() {
-        this.hide()
-
         let todoItemsValue = document.querySelectorAll('.todo_item_value')
 
         todoItemsValue.forEach(elem => elem.disabled = false)

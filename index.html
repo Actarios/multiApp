@@ -10,10 +10,10 @@
 <body>
     <section id="main">
         <h2>Список задач</h2>
-        <div class="todo_tabs">
-            <span class="todo_tabs_item active">В работе</span>
-            <span class="todo_tabs_item">Выполненные</span>
-        </div>
+        <ul class="todo_tabs">
+            <li class="todo_tabs_item active">В работе</li>
+            <li class="todo_tabs_item">Выполненные</li>
+        </ul>
         <div class="todo_wrapper">
             <div class="todo_working">
                 <div class="todo_filter_wrap">
@@ -24,18 +24,45 @@
                     <li class="todo_item">
                         <div class="todo_item_num">1</div>
                         <input class="todo_item_value" type="text" value="Покормить кота" disabled>
+                        <div class="todo_item_wrap">
+                            <div class="todo_item_inner">
+                                <span>Крайний срок выполнения:</span>
+                                <span class="todo_item_date">2012-12-12</span>
+                                <div class="todo_item_desc">
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus repudiandae porro excepturi recusandae officiis eum laudantium neque sit placeat ex, voluptatum expedita esse ipsam distinctio quis autem, amet voluptate optio!
+                                </div>
+                            </div>
+                        </div>
                     </li>
                     <li class="todo_item">
                         <div class="todo_item_num">2</div>
                         <input class="todo_item_value" type="text" value="Проверить почту" disabled>
+                        <div class="todo_item_wrap">
+                            <div class="todo_item_inner">
+                                <span>Крайний срок выполнения:</span>
+                                <span class="todo_item_date">2012-12-12</span>
+                                <div class="todo_item_desc">
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus repudiandae porro excepturi recusandae officiis eum laudantium neque sit placeat ex, voluptatum expedita esse ipsam distinctio quis autem, amet voluptate optio!
+                                </div>
+                            </div>
+                        </div>
                     </li>
                     <li class="todo_item">
                         <div class="todo_item_num">3</div>
                         <input class="todo_item_value" type="text" value="Погладить кота" disabled>
+                        <div class="todo_item_wrap">
+                            <div class="todo_item_inner">
+                                <span>Крайний срок выполнения:</span>
+                                <span class="todo_item_date">2012-12-12</span>
+                                <div class="todo_item_desc">
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus repudiandae porro excepturi recusandae officiis eum laudantium neque sit placeat ex, voluptatum expedita esse ipsam distinctio quis autem, amet voluptate optio!
+                                </div>
+                            </div>
+                        </div>
                     </li>
                 </ul>
                 <div class="todo_panel">
-                    <input type="button" value="Добавить" id="addTodo">
+                    <input type="button" value="Добавить" id="addTodoBtn">
                     <input type="button" value="Редактировать" id="changeTodo">
                     <input type="button" value="Сохранить" id="saveChangesTodo" class="hide">
                     <input type="button" value="Удалить" id="deleteTodo">
