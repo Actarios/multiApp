@@ -11,10 +11,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     refreshNums()
 
+    // Filter
+
     let todoFilter = document.querySelector('#todoFilter')
-    let todoItemsValue = document.querySelectorAll('.todo_item_value')
 
     todoFilter.addEventListener('input', function() {
+        let todoItemsValue = document.querySelectorAll('.todo_item_value')
         for (let elem of todoItemsValue) {
             let textElem = elem.value.toLowerCase()
             let textInput = this.value.toLowerCase()
@@ -27,6 +29,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     })
 
+    // Adding new task
+
+    class Task {
+        constructor(title, desc, deadline) {
+            this.title = title
+            this.desc = desc
+            this.deadline = deadline
+            this.pending = false
+        }
+    }
+
+    let newTask = new Task('Погладить кота', 'Я люблю своего котика, причешу хвостик гладко', '2023-02-13')
+
+    console.log(newTask)
+
     let addTodo = document.querySelector('#addTodo')
 
     addTodo.addEventListener('click', function() {
@@ -35,7 +52,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (ans !== '' && ans !== null) {
             createListPoint(ans)
         } else {
-            alert('Подумайте ещё раз')
+            let exit = confirm('Вы уверены, что хотите выйти?', '')
+            if (!exit) {
+                let ans2 = prompt('Напишите текст задачи:', ans)
+            }
         }
     })
 
@@ -108,4 +128,36 @@ document.addEventListener('DOMContentLoaded', function() {
         confirmDeleteTodo.classList.add('hide')
         deleteTodo.classList.remove('hide')
     })
+
+    // Tabs
+
+    let todoTabs = document.querySelector('.todo_tabs')
+    let todoTabsItems = document.querySelectorAll('.todo_tabs_item')
+    let todoTabContent = document.querySelectorAll('.todo_wrapper > div')
+
+    function hideContentTab(n) {
+        for (let i = n; i < todoTabContent.length; i++) {
+            todoTabContent[i].classList.remove('show')
+            todoTabContent[i].classList.add('hide')
+        }
+    }
+    hideContentTab(1)
+
+    todoTabs.addEventListener('click', (event) => {
+        let current
+        for (let i = 0; i < todoTabsItems.length; i++) {
+            if (todoTabsItems[i] == event.target) {
+                current = i
+            }
+        }
+        hideContentTab(0)
+        todoTabContent[current].classList.remove('hide')
+        todoTabContent[current].classList.add('show')
+
+        for (let elem of todoTabsItems) {
+            elem.classList.remove('active')
+        }
+        todoTabsItems[current].classList.add('active')
+    })
+        
 })
