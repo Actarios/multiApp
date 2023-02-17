@@ -51,9 +51,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     todoFilterWrap.addEventListener('mouseover', () => {
         todoFilterWrap.classList.add('hover')
+        todoFilter.disabled = false
     })
     todoFilterWrap.addEventListener('mouseout', () => {
         if (todoFilter.value == '') {
+            todoFilter.disabled = true
             todoFilterWrap.classList.remove('hover')
         }
     })
@@ -192,20 +194,22 @@ document.addEventListener('DOMContentLoaded', function() {
     hideContentTab(1)
 
     todoTabs.addEventListener('click', (event) => {
-        let current
-        for (let i = 0; i < todoTabsItems.length; i++) {
-            if (todoTabsItems[i] == event.target) {
-                current = i
+        if (event.target.matches('.todo_tabs_item')) {
+            let current
+            for (let i = 0; i < todoTabsItems.length; i++) {
+                if (todoTabsItems[i] == event.target) {
+                    current = i
+                }
             }
-        }
-        hideContentTab(0)
-        todoTabContent[current].classList.remove('hide')
-        todoTabContent[current].classList.add('show')
-
-        for (let elem of todoTabsItems) {
-            elem.classList.remove('active')
-        }
-        todoTabsItems[current].classList.add('active')
+            hideContentTab(0)
+            todoTabContent[current].classList.remove('hide')
+            todoTabContent[current].classList.add('show')
+    
+            for (let elem of todoTabsItems) {
+                elem.classList.remove('active')
+            }
+            todoTabsItems[current].classList.add('active')
+        } 
     })
 
     // Popup
