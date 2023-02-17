@@ -7,6 +7,11 @@
     box-sizing: border-box;
 }
 
+:root {
+    --bg-task-board: #3eb8a9;
+    --dark-green: rgb(81, 114, 43)
+}
+
 li {
     display: block;
 }
@@ -38,17 +43,60 @@ h2 {
 
 .todo_wrapper {
     border-radius: 0 3px 3px 3px;
-    background-color: #ee7171;
+    background-color: var(--bg-task-board);
     padding: 12px;
 }
 
+.todo_filter_wrap {
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    height: 32px;
+}
+
+.todo_filter_wrap.hover .todo_filter {
+    right: 0;
+}
+
+.todo_filter_wrap i {
+    color: #fff;
+    text-shadow: #222 1px 1px 1px;
+    transition: .5s ease all;
+    cursor: pointer;
+}
+
+.todo_filter_wrap.hover i {
+    transform: rotate(90deg);
+    margin-left: 10px;
+}
+
+.todo_filter_wrap span {
+    position: absolute;
+    left: 25px;
+    color: #fff;
+    text-shadow: #222 1px 1px 1px;
+    margin-right: 15px;
+    transition: .5s ease all;
+}
+
+.todo_filter_wrap.hover span {
+    left: 100%;
+}
+
 .todo_filter {
+    position: absolute;
+    top: 0;
+    right: -100%;
     width: 100%;
     border-radius: 3px;
     border: 1px solid #fff;
     font-size: 16px;
     padding: 5px;
-    margin: 15px 0;
+    padding-left: 30px;
+    transition: 1s ease all;
+    outline: none;
 }
 
 .todo_item {
@@ -123,19 +171,20 @@ h2 {
     margin-top: 20px;
 }
 
-.todo_panel input {
+input[type='button'] {
+    font-size: 14px;
     background-color: #fff;
     color: #222;
     border: 1px solid #fff;
     border-radius: 3px;
-    padding: 5px 8px;
+    padding: 6px 8px;
     cursor: pointer;
     transition: .5s ease all;
 }
 
-.todo_panel input:hover {
-    background-color: rgb(44, 121, 192);
-    border: 1px solid rgb(44, 121, 192);
+input[type='button']:hover {
+    background-color: var(--dark-green);
+    border: 1px solid var(--dark-green);
     color: #fff;
 }
 
@@ -149,14 +198,17 @@ h2 {
 .todo_tabs {
     display: flex;
     margin-top: 20px;
+
 }
 
 .todo_tabs_item {
+    font-size: 16px;
     color: #fff;
-    background-color: #ee7171;
-    padding: 5px 10px;
+    text-shadow: #222 1px 1px 1px;
+    background-color: var(--bg-task-board);
+    padding: 10px 12px;
     border-radius: 3px 3px 0 0;
-    opacity: .5;
+    opacity: .75;
     margin: 0;
     cursor: pointer;
     -webkit-border-radius: 3px 3px 0 0;
@@ -167,4 +219,53 @@ h2 {
 
 .todo_tabs_item.active {
     opacity: 1;
+}
+
+/* == Todo Popup == */
+
+.overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .75);
+}
+
+.todo_popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--bg-task-board);
+    width: 420px;
+    height: 450px;
+    border-radius: 3px;
+    z-index: 100;
+    padding: 20px 35px;
+    animation: 2s ease all;
+}
+
+.todo_popup h3 {
+    text-align: center;
+}
+
+.close {
+    position: absolute;
+    font-size: 24px;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: var(--dark-green)
+}
+
+#tpf label {
+    display: block;
+}
+
+#tpf input[type=button] {
+    display: inline-block;
 }

@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     refreshNums()
 
-    // Filter
+    // 1 Filter
 
     todoList.addEventListener('click', (event) => {
         let todoItems = document.querySelectorAll('.todo_item'),
@@ -47,80 +47,97 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     })
 
-    // Show full description
+    let todoFilterWrap = document.querySelector('.todo_filter_wrap')
 
-    
-
-    // Adding new task
-
-    const addTodoBtn = document.getElementById('addTodoBtn')
-
-    // class Task {
-    //     constructor(title, desc, deadline) {
-    //         this.title = title
-    //         this.desc = desc
-    //         this.deadline = deadline
-    //         this.pending = false
-    //     }
-    // }
-
-    // let workingTasks = new Map()
-    // let completedTasks = new Map()
-
-    // addTodoBtn.addEventListener('click', () => {
-    //     let ans1 = prompt('Название задачи:', ''),
-    //         ans2 = prompt('Краткое описание:', ''),
-    //         ans3 = prompt('Крайний срок выполнения? (в формате YYYY-MM-DD)', '')
-        
-    //     let task = new Task(ans1, ans2, ans3)
-    //     workingTasks.set(task.title, task)
-
-    //     console.log(workingTasks)
-    // })
-
-    // let newTask = new Task('Погладить кота', 'Я люблю своего котика, причешу хвостик гладко', '2023-02-13')
-
-
-    
-    addTodoBtn.addEventListener('click', function() {
-        let ans = prompt('Напишите текст задачи:', '')
-
-        if (ans !== '' && ans !== null) {
-            createListPoint(ans)
-        } else {
-            let exit = confirm('Вы уверены, что хотите выйти?', '')
+    todoFilterWrap.addEventListener('mouseover', () => {
+        todoFilterWrap.classList.add('hover')
+    })
+    todoFilterWrap.addEventListener('mouseout', () => {
+        if (todoFilter.value == '') {
+            todoFilterWrap.classList.remove('hover')
         }
     })
 
-    function createListPoint(text) {
-        let newItem = document.createElement('li')
-        let newItemNum = document.createElement('div')
-        let newItemText = document.createElement('input')
+    // 2 Adding new task
 
-        newItem.classList.add('todo_item')
-        newItemNum.classList.add('todo_item_num')
-        newItemText.classList.add('todo_item_value')
+    const addTodoBtn = document.getElementById('addTodoBtn')
 
-        newItem.appendChild(newItemNum)
-        newItem.appendChild(newItemText)
-        newItemText.type = 'text'
-        newItemText.disabled = 'true'
+    class Task {
+        constructor(title, desc, deadline) {
+            this.title = title
+            this.desc = desc
+            this.deadline = deadline
+            this.pending = false
+        }
+    }
 
-        todoList.appendChild(newItem)
-        newItemText.value = text
+    let workingTasks = []
+    let completedTasks = []
+
+    addTodoBtn.addEventListener('click', () => {
+        showPopup()
+    })
+
+    function createListPoint({title, desc, date}) {
+        let todoItem = document.createElement('li'),
+            todoInnerContent = `
+                <div class="todo_item_num"></div>
+                <input class="todo_item_value" type="text" value="${title}" disabled>
+                <div class="todo_item_wrap">
+                    <div class="todo_item_inner">
+                        <span>Крайний срок выполнения:</span>
+                        <span class="todo_item_date">${date}</span>
+                        <div class="todo_item_desc">${desc}</div>
+                    </div>
+                </div>`
+
+        todoItem.classList.add('todo_item')
+        todoItem.innerHTML = todoInnerContent
+        todoList.appendChild(todoItem)
+
+        let result = new Task(title, desc, date)
+        workingTasks.push(result)
         refreshNums()
     }
+
+    let initialTasks = [
+        {
+            title: 'Покормить кота',
+            desc: 'Только качественный корм, чтобы котик был доволен.',
+            date: '2022-02-13'
+        },
+        {
+            title: 'Проверить почту',
+            desc: 'А вдруг прислали что-то важное?',
+            date: '2022-02-13'
+        },
+        {
+            title: 'Погладить кота',
+            desc: 'Кот сам себя не погладит.',
+            date: '2022-02-13'
+        }
+    ]
+
+    createListPoint(initialTasks[0])
+    createListPoint(initialTasks[1])
+    createListPoint(initialTasks[2])
+
+    console.log(workingTasks)
+    
+
+    // Changing tasks
 
     let changeTodo = document.querySelector('#changeTodo')
     let saveChangesTodo = document.querySelector('#saveChangesTodo')
 
     changeTodo.addEventListener('click', function() {
-        let todoItemsValue = document.querySelectorAll('.todo_item_value')
+        console.log(workingTasks)
+        // let todoItemsValue = document.querySelectorAll('.todo_item_value')
 
-        todoItemsValue.forEach(elem => elem.disabled = false)
-        this.classList.add('hide')
-        saveChangesTodo.classList.remove('hide')
-        todoList.classList.remove('green-light')
+        // todoItemsValue.forEach(elem => elem.disabled = false)
+        // this.classList.add('hide')
+        // saveChangesTodo.classList.remove('hide')
+        // todoList.classList.remove('green-light')
     })
     saveChangesTodo.addEventListener('click', function() {
         let todoItemsValue = document.querySelectorAll('.todo_item_value')
@@ -190,5 +207,59 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         todoTabsItems[current].classList.add('active')
     })
-        
+
+    // Popup
+
+    const body = document.querySelector('body')
+    let overlay = document.createElement('div')
+    let popup = document.querySelector('.todo_popup')
+    let close = document.querySelector('.close')
+
+    const overlayClass = ['overlay', 'hide']
+    overlay.classList.add(...overlayClass)
+    body.appendChild(overlay)
+
+    function showPopup() {
+        overlay.classList.remove('hide')
+        popup.classList.remove('hide')
+    }
+
+    function hidePopup() {
+        overlay.classList.add('hide')
+        popup.classList.add('hide')
+    }
+
+    close.addEventListener('click', hidePopup)
+    overlay.addEventListener('click', hidePopup)
+
+
+    let formName = document.getElementById('tpf_name'),
+        formDate = document.getElementById('tpf_date'),
+        formDesc = document.getElementById('tpf_desc'),
+        formAdd = document.getElementById('tpf_add'),
+        formClear = document.getElementById('tpf_clear')
+
+    function clearForm() {
+        formName.value = ''
+        formDate.value = ''
+        formDesc.value = ''
+    }
+
+    formAdd.addEventListener('click', (event) => {
+        event.preventDefault()
+
+        if (formName.value !== '' && formClear.value !== '') {
+            let task = {
+                title: formName.value,
+                date: formDate.value,
+                desc: formDesc.value
+            }
+            createListPoint(task)
+            hidePopup()
+            clearForm()  
+        }
+    })
+
+    formClear.addEventListener('click', clearForm)
+
 })
